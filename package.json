@@ -1,0 +1,54 @@
+Path: /package.json
+{
+"name": "webscript-lang",
+"version": "0.1.0",
+"description": "WEBSCRIPT — Spatial Dimensional Language for the Web",
+"main": "dist/index.js",
+"types": "dist/index.d.ts",
+"scripts": {
+"build": "tsc",
+"build:watch": "tsc --watch",
+"test": "node --experimental-vm-modules node_modules/.bin/jest",
+"test:watch": "jest --watch",
+"lint": "eslint src --ext .ts",
+"dev": "ts-node src/cli/index.ts",
+"docs": "node scripts/build-docs.js",
+"playground": "node scripts/serve-playground.js"
+},
+"keywords": [
+"webscript",
+"spatial",
+"language",
+"dsl",
+"geometry",
+"css",
+"svg",
+"html",
+"compiler",
+"sageworks"
+],
+"author": "Peace Thabiwa <sageworks.ai>",
+"license": "MIT",
+"repository": {
+"type": "git",
+"url": "https://github.com/YOUR_USERNAME/webscript"
+},
+"homepage": "https://github.com/YOUR_USERNAME/webscript#readme",
+"bugs": {
+"url": "https://github.com/YOUR_USERNAME/webscript/issues"
+},
+"devDependencies": {
+"@types/jest": "^29.0.0",
+"@types/node": "^20.0.0",
+"@typescript-eslint/eslint-plugin": "^6.0.0",
+"@typescript-eslint/parser": "^6.0.0",
+"eslint": "^8.0.0",
+"jest": "^29.0.0",
+"ts-jest": "^29.0.0",
+"ts-node": "^10.0.0",
+"typescript": "^5.0.0"
+},
+"engines": {
+"node": ">=18.0.0"
+}
+}
