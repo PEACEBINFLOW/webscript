@@ -31,7 +31,7 @@ Path: /package.json
 "license": "MIT",
 "repository": {
 "type": "git",
-"url": "https://github.com/YOUR_USERNAME/webscript"
+"url": "https://github.com/PEACEBINFLOW/webscript"
 },
 "homepage": "https://github.com/YOUR_USERNAME/webscript#readme",
 "bugs": {
