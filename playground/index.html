@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WEBSCRIPT Playground — SAGEWORKS AI</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+background: #07060d;
+color: #d8e8f0;
+font-family: 'Share Tech Mono', 'Courier New', monospace;
+height: 100vh;
+overflow: hidden;
+display: grid;
+grid-template-rows: 44px 1fr 32px;
+}
+header {
+background: #08060e;
+border-bottom: 1px solid #1e1828;
+display: flex;
+align-items: center;
+padding: 0 16px;
+gap: 16px;
+}
+header h1 {
+font-size: 13px;
+letter-spacing: 4px;
+color: #c8941a;
+}
+header h1 em {
+font-style: normal;
+color: #e8ff47;
+}
+.hbtn {
+font-size: 9px;
+letter-spacing: 2px;
+padding: 4px 12px;
+background: transparent;
+border: 1px solid #2a1f3a;
+color: #7a6a9a;
+cursor: pointer;
+}
+.hbtn:hover { border-color: #8a60e0; color: #8a60e0; }
+.hbtn.run   { border-color: #e8ff47; color: #e8ff47; }
+.version {
+margin-left: auto;
+font-size: 8px;
+letter-spacing: 2px;
+color: #3a3050;
+border: 1px solid #2a1f3a;
+padding: 3px 10px;
+}
+main {
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+}
+.pane {
+border-right: 1px solid #1a1428;
+display: flex;
+flex-direction: column;
+overflow: hidden;
+}
+.pane:last-child { border-right: none; }
+.pane-header {
+padding: 8px 14px;
+border-bottom: 1px solid #1a1428;
+font-size: 9px;
+letter-spacing: 2px;
+display: flex;
+align-items: center;
+gap: 8px;
+}
+.pane-dot {
+width: 5px;
+height: 5px;
+border-radius: 50%;
+}
+textarea, .output {
+flex: 1;
+background: #06050a;
+color: #d8e8f0;
+font-family: 'Share Tech Mono', 'Courier New', monospace;
+font-size: 12px;
+line-height: 1.75;
+padding: 16px;
+border: none;
+outline: none;
+resize: none;
+overflow-y: auto;
+}
+.output { white-space: pre; overflow-x: auto; }
+.tab-row {
+display: flex;
+border-bottom: 1px solid #1a1428;
+}
+.tab {
+font-size: 8px;
+letter-spacing: 1px;
+padding: 5px 10px;
+cursor: pointer;
+color: #3a3050;
+border-bottom: 2px solid transparent;
+}
+.tab.active { color: #e8ff47; border-bottom-color: #e8ff47; }
+footer {
+background: #07060d;
+border-top: 1px solid #1a1428;
+display: flex;
+align-items: center;
+padding: 0 16px;
+gap: 20px;
+font-size: 9px;
+color: #2a2838;
+}
+footer span { color: #4a4060; }
+footer b { color: #c8941a; font-weight: normal; }
+</style>
+</head>
+<body>
+<header>
+  <h1>WEB<em>SCRIPT</em></h1>
+  <button class="hbtn run" onclick="runCompile()">▶ COMPILE</button>
+  <button class="hbtn" onclick="loadExample('basic')">ENTITY</button>
+  <button class="hbtn" onclick="loadExample('relational')">RELATIONAL</button>
+  <button class="hbtn" onclick="loadExample('constraint')">CONSTRAINT</button>
+  <button class="hbtn" onclick="loadExample('classifier')">CLASSIFIER</button>
+  <button class="hbtn" onclick="loadExample('game')">GAME</button>
+  <div class="version">v0.1 SAGEWORKS AI</div>
+</header>
+<main>
+  <div class="pane">
+    <div class="pane-header">
+      <div class="pane-dot" style="background:#e8ff47;box-shadow:0 0 6px #e8ff47"></div>
+      <span style="color:#e8ff47">WEBSCRIPT SOURCE</span>
+    </div>
+    <textarea id="ws-input" spellcheck="false">card of panel {
+  depth    : phi * 300
+  rotate   : harmonic(0.5)
+  opacity  : field(0.85)
+}
+card.rotation = cursor.angle * harmonic(0.4)
+card.scale    = distance(origin) ^ 0.5
+3 orbital nodes of card</textarea>
+  </div>
+  <div class="pane">
+    <div class="pane-header">
+      <div class="pane-dot" style="background:#47b8ff;box-shadow:0 0 6px #47b8ff"></div>
+      <span style="color:#47b8ff">COMPILED OUTPUT</span>
+    </div>
+    <div class="tab-row">
+      <div class="tab active" onclick="showTab('html')">HTML</div>
+      <div class="tab" onclick="showTab('css')">CSS</div>
+      <div class="tab" onclick="showTab('svg')">SVG</div>
+      <div class="tab" onclick="showTab('js')">JS</div>
+      <div class="tab" onclick="showTab('ts')">TS</div>
+      <div class="tab" onclick="showTab('sql')">SQL</div>
+      <div class="tab" onclick="showTab('ast')">AST</div>
+    </div>
+    <div class="output" id="compiled-output">click COMPILE to see output</div>
+  </div>
+  <div class="pane">
+    <div class="pane-header">
+      <div class="pane-dot" style="background:#47ffb8;box-shadow:0 0 6px #47ffb8"></div>
+      <span style="color:#47ffb8">LIVE RENDER</span>
+    </div>
+    <canvas id="live-canvas" style="flex:1;width:100%;display:block;background:#06050a"></canvas>
+  </div>
+</main>
+<footer>
+  <span id="f-status">ready</span>
+  <span>ERRORS·<span id="f-errors">0</span></span>
+  <span>WARNINGS·<span id="f-warnings">0</span></span>
+  <b>WEBSCRIPT·v0.1·SAGEWORKS·AI</b>
+</footer>
+<script src="editor.js"></script>
+</body>
+</html>
